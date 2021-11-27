@@ -14,23 +14,35 @@ https://www.qtrac.eu/pyhexviewer.html
 https://www.youtube.com/watch?v=kJSOuPTjH50
 /end Comments
 """
-#imports
-import os, sys
-import tkinter as tk
+#Variable Declaration
+
+bytesRead = 0 #count the number of bytes being read in the 'for' loop
+contentLine = [] #list (array) holds the contents of the 'for' loop
 
 print("HexaPy")#Project Name
 
 
-file = input("Enter a file name: ")
-openedFile= open(file,'rb')
+file = input("Enter a file name: ") #Create a string to hold the name of the target file
 
-bytesRead = 0
-contentLine = []
+"""
+use python open() method to open chosen file in binary format
+using the 'with' operator closes the file to free memory after it has been read, using read(), into the script
 
-fileContent = openedFile.read()
-for byte in fileContent:
-    bytesRead = bytesRead+1
-    contentLine.append(byte)
+"""
+with open(file,'rb') as openedFile:
+    fileContent = openedFile.read()
+
+for byte in fileContent:#The 'for' loop prints out the data read from file
+    bytesRead = bytesRead+1#increment the line counter
+    contentLine.append(byte)#add the contents read from byte to contentLine list
+    """
+    print() notes
+    overview: display outputted line in console as a formatted printout 
+    -the format(byte,2) method displays the string (byte) placeholder to be passed in to print with several modifications
+        -'{}' delimits the formatted output
+        -':x' reads the output as lower case hex format
+        -'end=" "' parameter places an empty space at the end of the printed line rather than default newline character
+    """
     print("{0:0{1}x}".format(byte,2), end=" ")
     if bytesRead % 16 == 0:
         print("#",end=" ")
